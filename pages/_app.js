@@ -1,4 +1,5 @@
 import React from 'react';
+import SEO from '../components/SEO/SEO';
 import { useRouter } from 'next/router';
 
 function MyApp({ Component, pageProps }) {
