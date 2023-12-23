@@ -1,4 +1,4 @@
-import Head from 'next/head';
+import Head from './next/head';
 
 /**
  * Provide SEO related meta tags to a page.
