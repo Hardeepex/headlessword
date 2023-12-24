@@ -1,4 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
+import { useRouter } from 'next/router';
 import * as MENUS from '../constants/menus';
 import { BlogInfoFragment } from '../fragments/GeneralSettings';
 import {
@@ -12,11 +13,15 @@ import {
 } from '../components';
 import { getNextStaticProps } from '@faustwp/core';
 
-export default function Page(props) {
+interface PageProps {
+  title: string;
+}
+
+export default function Page({ title }: PageProps): React.ReactElement {
+  const router = useRouter();
   const { data } = useQuery(Page.query, {
-    variables: Page.variables(),
+    variables: { ...Page.variables(), ...router.query },
   });
-  const title = props.title;
 
   const { title: siteTitle, description: siteDescription } = data?.generalSettings;
   const primaryMenu = data?.headerMenuItems?.nodes ?? [];
