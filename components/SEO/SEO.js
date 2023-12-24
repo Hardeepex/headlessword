@@ -11,7 +11,14 @@ import Head from './next/head';
  *
  * @returns {React.ReactElement} The SEO component
  */
-export default function SEO({ title, description, imageUrl, url }) {
+interface SEOProps {
+  title: string;
+  description: string;
+  imageUrl: string;
+  url: string;
+}
+
+export default function SEO({ title, description, imageUrl, url }: SEOProps) {
   if (!title && !description && !imageUrl && !url) {
     return null;
   }
@@ -54,5 +61,5 @@ export default function SEO({ title, description, imageUrl, url }) {
         )}
       </Head>
     </>
-  );
+  ): React.ReactElement | null;
 }

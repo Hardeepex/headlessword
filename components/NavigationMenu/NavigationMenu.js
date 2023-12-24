@@ -9,7 +9,21 @@ import { flatListToHierarchical } from '@faustwp/core';
 let cx = classNames.bind(styles);
 let cxFromWp = classNames.bind(stylesFromWP);
 
-export default function NavigationMenu({ menuItems, className }) {
+interface MenuItem {
+  id: string;
+  path: string;
+  label: string;
+  parentId: string;
+  cssClasses: string[];
+  children: MenuItem[];
+  menu: {
+    node: {
+      name: string;
+    };
+  };
+}
+
+export default function NavigationMenu({ menuItems, className }: { menuItems: MenuItem[]; className: string }): React.ReactElement | null {
   if (!menuItems) {
     return null;
   }
