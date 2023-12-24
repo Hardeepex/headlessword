@@ -1,7 +1,9 @@
 const { withFaust, getWpHostname } = require('@faustwp/core');
 
 /**
- * @type {import('next').NextConfig}
+ * @type {import('next').NextConfig & {
+  typescript?: boolean;
+}}
  **/
 module.exports = withFaust({
   reactStrictMode: true,
