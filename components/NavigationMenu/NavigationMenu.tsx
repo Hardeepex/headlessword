@@ -3,41 +3,37 @@ import { gql } from '@apollo/client';
 import Link from 'next/link';
 import styles from './NavigationMenu.module.scss';
 import stylesFromWP from './NavigationMenuClassesFromWP.module.scss';
-import NavigationMenu from './NavigationMenu.tsx';
 import { flatListToHierarchical } from '@faustwp/core';
 
 let cx = classNames.bind(styles);
 let cxFromWp = classNames.bind(stylesFromWP);
 
-interface MenuItem {
+type MenuItem = {
   id: string;
-  path: string;
-  label: string;
-  parentId: string;
-  cssClasses: string[];
+  path: string | null;
+  label: string | null;
   children: MenuItem[];
-  menu: {
+  cssClasses: string[];
+  menu?: {
     node: {
       name: string;
     };
   };
-}
+};
 
-export default function NavigationMenu({ menuItems, className }: { menuItems: MenuItem[]; className: string }): React.ReactElement | null {
+export default function NavigationMenu({ menuItems, className }: { menuItems: MenuItem[]; className: string }) {
   if (!menuItems) {
     return null;
   }
 
-  // Based on https://www.wpgraphql.com/docs/menus/#hierarchical-data
   const hierarchicalMenuItems = flatListToHierarchical(menuItems);
 
-  function renderMenu(items) {
+  function renderMenu(items: MenuItem[]) {
     return (
       <ul className={cx('menu')}>
         {items.map((item) => {
           const { id, path, label, children, cssClasses } = item;
 
-          // @TODO - Remove guard clause after ghost menu items are no longer appended to array.
           if (!item.hasOwnProperty('__typename')) {
             return null;
           }
